@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html>calcubb
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshCut Barber Shop</title>
+<title>FreshCut Barber Shop + Calculator</title>
 <style>
 /* GENERAL */
 body {
@@ -40,9 +40,7 @@ nav {
 nav .logo { font-weight: bold; font-size: 1.2rem; color: gold; text-shadow: 0 0 10px gold; }
 nav .nav-links { display: flex; gap: 20px; }
 nav .nav-links a { color: white; text-decoration: none; font-weight: bold; transition: 0.3s; }
-nav .nav-links a:hover { color: gold; transform: scale(1.1); }
-
-/* MOBILE MENU */
+nav .nav-links a:hover { color: gold; transform: scale(1.1); text-shadow: 0 0 8px gold; }
 .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
 .menu-toggle div { width: 25px; height: 3px; background: white; margin: 4px 0; transition: 0.3s; }
 
@@ -66,53 +64,44 @@ nav .nav-links a:hover { color: gold; transform: scale(1.1); }
   z-index: 0;
 }
 .hero h1, .hero p, .hero .btn { position: relative; z-index: 1; }
-.hero h1 { 
-  font-size: 3rem; 
-  color: gold; 
-  text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold, 0 0 30px orange; 
-  animation: neonGlow 1.5s ease-in-out infinite alternate;
-}
+.hero h1 { font-size: 3rem; color: gold; text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold, 0 0 30px orange; animation: neonGlow 1.5s ease-in-out infinite alternate; }
 .hero p { font-size: 1.3rem; margin: 15px 0; animation: fadeInText 2s ease-in-out infinite alternate; }
-.hero .btn {
+
+/* BUTTONS */
+.hero .btn, button.btn, .floating-book {
+  display: inline-block;
   margin: 10px;
   padding: 12px 25px;
   background: gold;
   color: black;
-  border-radius: 5px;
+  border-radius: 50px;
   font-weight: bold;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
   transition: 0.3s;
+  box-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 30px orange;
 }
-.hero .btn:hover { background: orange; transform: scale(1.1); }
+.hero .btn:hover, button.btn:hover, .floating-book:hover {
+  background: orange;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px gold, 0 0 40px orange, 0 0 60px gold;
+}
+.hero .btn::before, button.btn::before, .floating-book::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+.hero .btn:hover::before, button.btn:hover::before, .floating-book:hover::before { top: -20%; left: -20%; }
 
 /* NEON EFFECT */
 h2 { font-size: 2.2rem; color: gold; text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold; animation: neonGlow 1.5s ease-in-out infinite alternate; }
-
-/* SPARKLES */
-.sparkle {
-  position: absolute;
-  width: 4px; height: 4px;
-  background: gold;
-  border-radius: 50%;
-  opacity: 0.9;
-  pointer-events: none;
-  animation-name: driftUp;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  box-shadow: 0 0 10px gold, 0 0 15px orange;
-}
-@keyframes driftUp {
-  0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.8; }
-  50% { opacity: 0.5; }
-  100% { transform: translateY(-120vh) translateX(20px) scale(1); opacity: 0; }
-}
-
-/* NEON KEYFRAME */
-@keyframes neonGlow {
-  0% { text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold; }
-  50% { text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 30px gold; }
-  100% { text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold; }
-}
 
 /* SECTIONS */
 section {
@@ -155,20 +144,27 @@ button.btn:hover { background: orange; transform: scale(1.05); }
 /* FLOATING BUTTONS */
 .whatsapp { position: fixed; bottom: 20px; right: 20px; background: #25D366; padding: 18px; border-radius: 50%; font-size: 24px; text-decoration: none; box-shadow: 0 0 20px #25D366; animation: pulse 2s infinite; z-index: 1000; }
 .floating-book { position: fixed; bottom: 80px; right: 20px; background: gold; color: black; padding: 15px 25px; border-radius: 50px; font-weight: bold; text-decoration: none; box-shadow: 0 0 20px gold; z-index: 1000; transition: 0.3s; }
-.floating-book:hover { background: orange; transform: scale(1.05); }
 #backToTop { position: fixed; bottom: 150px; right: 20px; background: gold; color: black; padding: 12px 20px; border-radius: 50px; display: none; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px gold; z-index: 1000; }
 #backToTop:hover { background: orange; transform: scale(1.05); }
 @keyframes pulse {0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  nav .nav-links { display:none; flex-direction: column; background:#020617; position:absolute; top:60px; right:0; width:200px; padding:20px; border-radius:8px; }
-  nav .nav-links.active { display:flex; }
-  .menu-toggle { display:flex; }
-  .hero h1 { font-size:2.5rem; }
-  .hero p { font-size:1.1rem; }
-  .gallery-horizontal img { width:200px; }
+/* CALCULATOR */
+#calculator {
+  position: fixed;
+  bottom: 220px;
+  right: 20px;
+  width: 280px;
+  background: #1e293b;
+  border-radius: 20px;
+  box-shadow: 0 0 30px gold,0 0 60px orange;
+  z-index: 1000;
+  padding: 15px;
 }
+#calc-display { background:#020617; color:gold; font-size:1.5rem; padding:10px; border-radius:10px; text-align:right; margin-bottom:8px; min-height:40px; }
+#calc-history { background:#111827; color:#f1c40f; padding:6px; font-size:0.8rem; border-radius:8px; max-height:80px; overflow-y:auto; margin-bottom:8px; }
+.calc-btn { width:50px; height:50px; margin:3px; border:none; border-radius:12px; background:#1e293b; color:gold; font-weight:bold; cursor:pointer; box-shadow:0 0 10px gold; transition:0.3s; }
+.calc-btn:hover { transform:scale(1.1); box-shadow:0 0 20px gold,0 0 40px orange; }
+.calc-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:3px; margin-bottom:8px; }
 </style>
 </head>
 <body>
@@ -257,16 +253,53 @@ button.btn:hover { background: orange; transform: scale(1.05); }
 <a href="#booking" class="floating-book">Book Now</a>
 <button id="backToTop" onclick="scrollToTop()">↑ Top</button>
 
+<!-- CALCULATOR -->
+<div id="calculator">
+  <div id="calc-history"></div>
+  <div id="calc-display">0</div>
+  <div class="calc-grid">
+    <button class="calc-btn" onclick="calc('7')">7</button>
+    <button class="calc-btn" onclick="calc('8')">8</button>
+    <button class="calc-btn" onclick="calc('9')">9</button>
+    <button class="calc-btn" onclick="calc('/')">÷</button>
+    <button class="calc-btn" onclick="calc('Math.sqrt(')">√</button>
+
+    <button class="calc-btn" onclick="calc('4')">4</button>
+    <button class="calc-btn" onclick="calc('5')">5</button>
+    <button class="calc-btn" onclick="calc('6')">6</button>
+    <button class="calc-btn" onclick="calc('*')">×</button>
+    <button class="calc-btn" onclick="calc('Math.pow(')">x²</button>
+
+    <button class="calc-btn" onclick="calc('1')">1</button>
+    <button class="calc-btn" onclick="calc('2')">2</button>
+    <button class="calc-btn" onclick="calc('3')">3</button>
+    <button class="calc-btn" onclick="calc('-')">-</button>
+    <button class="calc-btn" onclick="calc('Math.sin(')">sin</button>
+
+    <button class="calc-btn" onclick="calc('0')">0</button>
+    <button class="calc-btn" onclick="calc('.')">.</button>
+    <button class="calc-btn" onclick="calculate()">=</button>
+    <button class="calc-btn" onclick="calc('+')">+</button>
+    <button class="calc-btn" onclick="calc('Math.cos(')">cos</button>
+
+    <button class="calc-btn" onclick="calc('Math.tan(')">tan</button>
+    <button class="calc-btn" onclick="calc('Math.log(')">log</button>
+    <button class="calc-btn" onclick="calc('Math.PI')">π</button>
+    <button class="calc-btn" onclick="calc('Math.E')">e</button>
+    <button class="calc-btn" onclick="backspace()">⌫</button>
+  </div>
+</div>
+
 <script>
 // MOBILE MENU
 function toggleMenu(){document.querySelector('.nav-links').classList.toggle('active');}
 
-// section animation
+// SECTION ANIMATION
 const sections = document.querySelectorAll("section");
 const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("active"); }); },{threshold:0.2});
 sections.forEach(section => observer.observe(section));
 
-// booking to WhatsApp
+// BOOKING WHATSAPP
 function sendToWhatsApp(e){
   e.preventDefault();
   let name = document.getElementById("name").value;
@@ -278,7 +311,7 @@ function sendToWhatsApp(e){
   window.open(url,"_blank");
 }
 
-// SCROLL PROGRESS BAR & BACK TO TOP
+// SCROLL PROGRESS & BACK TO TOP
 window.addEventListener('scroll', function(){
   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -287,17 +320,26 @@ window.addEventListener('scroll', function(){
 });
 function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
 
-// SPARKLES NEON GOLD
-for(let i=0;i<50;i++){
-  let s = document.createElement('div');
-  s.classList.add('sparkle');
-  s.style.left=Math.random()*window.innerWidth+'px';
-  s.style.top=(Math.random()*window.innerHeight)+'px';
-  s.style.width=(2+Math.random()*3)+'px';
-  s.style.height=s.style.width;
-  s.style.animationDuration=(4+Math.random()*4)+'s';
-  document.body.appendChild(s);
+// CALCULATOR LOGIC
+let display = document.getElementById('calc-display');
+let history = document.getElementById('calc-history');
+
+function calc(val){
+  if(display.innerText==='0' && !val.includes('Math')) display.innerText=val;
+  else display.innerText+=val;
+}
+function backspace(){
+  display.innerText = display.innerText.slice(0,-1);
+  if(display.innerText==='') display.innerText='0';
+}
+function calculate(){
+  try{
+    let result = eval(display.innerText);
+    history.innerHTML += `${display.innerText} = ${result}<br>`;
+    display.innerText = result;
+    history.scrollTop = history.scrollHeight;
+  }catch(e){ display.innerText='Error'; }
 }
 </script>
 </body>
-    </html>
+  </html>
