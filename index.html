@@ -1,180 +1,96 @@
-<!DOCTYPE html>calcubb
+<!DOCTYPE html>topnch
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshCut Barber Shop + Calculator</title>
+<title>FreshCut Barber Shop + Ultimate Premium Vibe</title>
 <style>
 /* GENERAL */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: #020617;
-  color: white;
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
-
-/* SCROLL PROGRESS BAR */
-#progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 5px;
-  background: gold;
-  width: 0%;
-  z-index: 1001;
-}
+body { margin:0; font-family:'Arial',sans-serif; background:#020617; color:white; scroll-behavior:smooth; overflow-x:hidden; cursor:crosshair; }
+#progress-bar{position:fixed;top:0;left:0;height:5px;background:gold;width:0%;z-index:1001;}
 
 /* NAVBAR */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background: rgba(2,6,23,0.95);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-nav .logo { font-weight: bold; font-size: 1.2rem; color: gold; text-shadow: 0 0 10px gold; }
-nav .nav-links { display: flex; gap: 20px; }
-nav .nav-links a { color: white; text-decoration: none; font-weight: bold; transition: 0.3s; }
-nav .nav-links a:hover { color: gold; transform: scale(1.1); text-shadow: 0 0 8px gold; }
-.menu-toggle { display: none; flex-direction: column; cursor: pointer; }
-.menu-toggle div { width: 25px; height: 3px; background: white; margin: 4px 0; transition: 0.3s; }
+nav{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(2,6,23,0.95);position:sticky;top:0;z-index:100;}
+nav .logo{font-weight:bold;font-size:1.2rem;color:gold;text-shadow:0 0 10px gold;}
+nav .nav-links{display:flex;gap:20px;}
+nav .nav-links a{color:white;text-decoration:none;font-weight:bold;transition:0.3s;}
+nav .nav-links a:hover{color:gold;transform:scale(1.1);text-shadow:0 0 8px gold;}
 
-/* HERO */
-.hero {
-  height: 100vh;
-  background: url('https://images.unsplash.com/photo-1599058917212-69a2f0de9f3e?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+/* HERO with rainbow shimmer */
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:linear-gradient(270deg,#ff0000,#ff7f00,#ffff00,#00ff00,#0000ff,#4b0082,#8f00ff);background-size:1400% 1400%;animation:rainbowShift 20s ease infinite;}
+@keyframes rainbowShift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 0;
-}
-.hero h1, .hero p, .hero .btn { position: relative; z-index: 1; }
-.hero h1 { font-size: 3rem; color: gold; text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold, 0 0 30px orange; animation: neonGlow 1.5s ease-in-out infinite alternate; }
-.hero p { font-size: 1.3rem; margin: 15px 0; animation: fadeInText 2s ease-in-out infinite alternate; }
+.hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:0;}
+.hero h1,.hero p,.hero .btn{position:relative;z-index:1;}
+.hero h1{font-size:3rem;color:gold;text-shadow:0 0 5px gold,0 0 10px gold,0 0 20px gold,0 0 30px orange;animation:neonGlow 1.5s ease-in-out infinite alternate;}
+.hero p{font-size:1.3rem;margin:15px 0;animation:fadeInText 2s ease-in-out infinite alternate;}
+.hero .btn{display:inline-block;margin:10px;padding:12px 25px;background:gold;color:black;border-radius:50px;font-weight:bold;text-decoration:none;overflow:hidden;transition:0.3s;box-shadow:0 0 10px gold,0 0 20px gold,0 0 30px orange;}
+.hero .btn:hover{background:orange;transform:scale(1.1);box-shadow:0 0 20px gold,0 0 40px orange,0 0 60px gold;}
 
-/* BUTTONS */
-.hero .btn, button.btn, .floating-book {
-  display: inline-block;
-  margin: 10px;
-  padding: 12px 25px;
-  background: gold;
-  color: black;
-  border-radius: 50px;
-  font-weight: bold;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: 0.3s;
-  box-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 30px orange;
-}
-.hero .btn:hover, button.btn:hover, .floating-book:hover {
-  background: orange;
-  transform: scale(1.1);
-  box-shadow: 0 0 20px gold, 0 0 40px orange, 0 0 60px gold;
-}
-.hero .btn::before, button.btn::before, .floating-book::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
-  transform: rotate(45deg);
-  transition: 0.5s;
-}
-.hero .btn:hover::before, button.btn:hover::before, .floating-book:hover::before { top: -20%; left: -20%; }
-
-/* NEON EFFECT */
-h2 { font-size: 2.2rem; color: gold; text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold; animation: neonGlow 1.5s ease-in-out infinite alternate; }
+/* NEON */
+h2{font-size:2.2rem;color:gold;text-shadow:0 0 5px gold,0 0 10px gold,0 0 20px gold;animation:neonGlow 1.5s ease-in-out infinite alternate;}
+@keyframes neonGlow{0%{text-shadow:0 0 5px gold,0 0 10px gold;}50%{text-shadow:0 0 20px orange,0 0 30px gold;}100%{text-shadow:0 0 10px gold,0 0 20px gold;}}
 
 /* SECTIONS */
-section {
-  padding: 60px 20px;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: 0.8s ease-in-out;
-  position: relative;
-  overflow: hidden;
-}
-section.active { opacity: 1; transform: translateY(0); }
+section{padding:60px 20px;text-align:center;opacity:0;transform:translateY(30px);transition:0.8s ease-in-out;position:relative;overflow:hidden;}
+section.active{opacity:1;transform:translateY(0);}
 
 /* SERVICES */
-.services { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 20px; max-width: 1000px; margin: auto; }
-.card { background: #1e293b; padding: 25px; border-radius: 15px; transition: 0.4s; }
-.card:hover { transform: scale(1.05); box-shadow: 0 0 20px gold; }
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1000px;margin:auto;}
+.card{background:#1e293b;padding:25px;border-radius:15px;transition:0.4s;}
+.card:hover{transform:scale(1.05);box-shadow:0 0 20px gold;}
 
 /* GALLERY */
-.gallery-horizontal { display: flex; overflow-x: auto; gap: 15px; padding: 15px; scroll-snap-type: x mandatory; }
-.gallery-horizontal img { width: 250px; border-radius: 10px; scroll-snap-align: start; transition: transform 0.3s; }
-.gallery-horizontal img:hover { transform: scale(1.05); cursor: pointer; }
+.gallery-horizontal{display:flex;overflow-x:auto;gap:15px;padding:15px;scroll-snap-type:x mandatory;}
+.gallery-horizontal img{width:250px;border-radius:10px;scroll-snap-align:start;transition:transform 0.3s;}
+.gallery-horizontal img:hover{transform:scale(1.05);cursor:pointer;}
 
 /* PRICING */
-.pricing { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 20px; max-width: 900px; margin: auto; }
-.price { background: #1e293b; padding: 25px; border-radius: 15px; transition: 0.3s; position: relative; }
-.price:hover { transform: scale(1.05); box-shadow: 0 0 20px gold; }
-.price::before { content: "★ Premium"; position: absolute; top: -10px; right: 10px; background: gold; color: black; font-size: 0.8rem; padding: 3px 7px; border-radius: 5px; }
+.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:900px;margin:auto;}
+.price{background:#1e293b;padding:25px;border-radius:15px;transition:0.3s;position:relative;}
+.price:hover{transform:scale(1.05);box-shadow:0 0 20px gold;}
+.price::before{content:"★ Premium";position:absolute;top:-10px;right:10px;background:gold;color:black;font-size:0.8rem;padding:3px 7px;border-radius:5px;}
 
-/* BOOKING FORM */
-form { max-width: 450px; margin: auto; display: grid; gap: 12px; }
-input, select, button { padding: 12px; border: none; border-radius: 8px; }
-button.btn { background: gold; color: black; font-weight: bold; cursor: pointer; transition: 0.3s; }
-button.btn:hover { background: orange; transform: scale(1.05); }
+/* BOOKING */
+form{max-width:450px;margin:auto;display:grid;gap:12px;}
+input,select,button{padding:12px;border:none;border-radius:8px;}
+button.btn{background:gold;color:black;font-weight:bold;cursor:pointer;transition:0.3s;}
+button.btn:hover{background:orange;transform:scale(1.05);}
 
 /* CONTACT */
-.contact { background: #1e293b; padding: 25px; border-radius: 15px; max-width: 450px; margin: auto; }
-.contact iframe { width: 100%; height: 250px; border-radius: 10px; margin-top: 15px; }
+.contact{background:#1e293b;padding:25px;border-radius:15px;max-width:450px;margin:auto;}
+.contact iframe{width:100%;height:250px;border-radius:10px;margin-top:15px;}
 
 /* FLOATING BUTTONS */
-.whatsapp { position: fixed; bottom: 20px; right: 20px; background: #25D366; padding: 18px; border-radius: 50%; font-size: 24px; text-decoration: none; box-shadow: 0 0 20px #25D366; animation: pulse 2s infinite; z-index: 1000; }
-.floating-book { position: fixed; bottom: 80px; right: 20px; background: gold; color: black; padding: 15px 25px; border-radius: 50px; font-weight: bold; text-decoration: none; box-shadow: 0 0 20px gold; z-index: 1000; transition: 0.3s; }
-#backToTop { position: fixed; bottom: 150px; right: 20px; background: gold; color: black; padding: 12px 20px; border-radius: 50px; display: none; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px gold; z-index: 1000; }
-#backToTop:hover { background: orange; transform: scale(1.05); }
-@keyframes pulse {0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+.whatsapp{position:fixed;bottom:20px;right:20px;background:#25D366;padding:18px;border-radius:50%;font-size:24px;text-decoration:none;box-shadow:0 0 20px #25D366;animation:pulse 2s infinite;z-index:1000;}
+.floating-book{position:fixed;bottom:80px;right:20px;background:gold;color:black;padding:15px 25px;border-radius:50px;font-weight:bold;text-decoration:none;box-shadow:0 0 20px gold;z-index:1000;transition:0.3s;}
+#backToTop{position:fixed;bottom:150px;right:20px;background:gold;color:black;padding:12px 20px;border-radius:50px;display:none;font-weight:bold;cursor:pointer;box-shadow:0 0 20px gold;z-index:1000;}
+#backToTop:hover{background:orange;transform:scale(1.05);}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
 
 /* CALCULATOR */
-#calculator {
-  position: fixed;
-  bottom: 220px;
-  right: 20px;
-  width: 280px;
-  background: #1e293b;
-  border-radius: 20px;
-  box-shadow: 0 0 30px gold,0 0 60px orange;
-  z-index: 1000;
-  padding: 15px;
-}
-#calc-display { background:#020617; color:gold; font-size:1.5rem; padding:10px; border-radius:10px; text-align:right; margin-bottom:8px; min-height:40px; }
-#calc-history { background:#111827; color:#f1c40f; padding:6px; font-size:0.8rem; border-radius:8px; max-height:80px; overflow-y:auto; margin-bottom:8px; }
-.calc-btn { width:50px; height:50px; margin:3px; border:none; border-radius:12px; background:#1e293b; color:gold; font-weight:bold; cursor:pointer; box-shadow:0 0 10px gold; transition:0.3s; }
-.calc-btn:hover { transform:scale(1.1); box-shadow:0 0 20px gold,0 0 40px orange; }
-.calc-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:3px; margin-bottom:8px; }
+#calculator{position:fixed;bottom:220px;right:20px;width:300px;background:#1e293b;border-radius:20px;box-shadow:0 0 30px gold,0 0 60px orange;z-index:1000;padding:15px;}
+#calc-display{background:#020617;color:gold;font-size:1.5rem;padding:10px;border-radius:10px;text-align:right;margin-bottom:8px;min-height:40px;}
+#calc-history{background:#111827;color:#f1c40f;padding:6px;font-size:0.8rem;border-radius:8px;max-height:80px;overflow-y:auto;margin-bottom:8px;}
+.calc-btn{width:55px;height:50px;margin:3px;border:none;border-radius:12px;background:#1e293b;color:gold;font-weight:bold;cursor:pointer;box-shadow:0 0 10px gold;transition:0.3s;}
+.calc-btn:hover{transform:scale(1.1);box-shadow:0 0 20px gold,0 0 40px orange;}
+.calc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-bottom:8px;}
+
+/* RAINBOW TRAIL SPARKLES */
+.sparkle{position:absolute;width:10px;height:10px;border-radius:50%;pointer-events:none;animation:fadeTrail 1s forwards;}
+@keyframes fadeTrail{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(2);}}
 </style>
 </head>
 <body>
 
 <div id="progress-bar"></div>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <nav>
 <div class="logo">FreshCut 💈</div>
-<div class="menu-toggle" onclick="toggleMenu()"><div></div><div></div><div></div></div>
 <div class="nav-links">
   <a href="#home">Home</a>
   <a href="#services">Services</a>
@@ -217,9 +133,9 @@ button.btn:hover { background: orange; transform: scale(1.05); }
 <section id="pricing">
 <h2>Pricing</h2>
 <div class="pricing">
-<div class="price">Haircut - $5</div>
-<div class="price">Beard Trim - $3</div>
-<div class="price">Full Package - $7</div>
+<div class="price" data-price="5">Haircut - $5</div>
+<div class="price" data-price="3">Beard Trim - $3</div>
+<div class="price" data-price="7">Full Package - $7</div>
 </div>
 </section>
 
@@ -228,10 +144,10 @@ button.btn:hover { background: orange; transform: scale(1.05); }
 <h2>Book Appointment</h2>
 <form onsubmit="sendToWhatsApp(event)">
 <input type="text" id="name" placeholder="Your Name" required>
-<select id="service">
-<option>Haircut</option>
-<option>Beard Trim</option>
-<option>Full Package</option>
+<select id="service" multiple>
+<option data-price="5">Haircut</option>
+<option data-price="3">Beard Trim</option>
+<option data-price="7">Full Package</option>
 </select>
 <input type="date" id="date" required>
 <input type="time" id="time" required>
@@ -263,83 +179,82 @@ button.btn:hover { background: orange; transform: scale(1.05); }
     <button class="calc-btn" onclick="calc('9')">9</button>
     <button class="calc-btn" onclick="calc('/')">÷</button>
     <button class="calc-btn" onclick="calc('Math.sqrt(')">√</button>
-
     <button class="calc-btn" onclick="calc('4')">4</button>
     <button class="calc-btn" onclick="calc('5')">5</button>
     <button class="calc-btn" onclick="calc('6')">6</button>
     <button class="calc-btn" onclick="calc('*')">×</button>
     <button class="calc-btn" onclick="calc('Math.pow(')">x²</button>
-
     <button class="calc-btn" onclick="calc('1')">1</button>
     <button class="calc-btn" onclick="calc('2')">2</button>
     <button class="calc-btn" onclick="calc('3')">3</button>
     <button class="calc-btn" onclick="calc('-')">-</button>
     <button class="calc-btn" onclick="calc('Math.sin(')">sin</button>
-
     <button class="calc-btn" onclick="calc('0')">0</button>
     <button class="calc-btn" onclick="calc('.')">.</button>
     <button class="calc-btn" onclick="calculate()">=</button>
     <button class="calc-btn" onclick="calc('+')">+</button>
     <button class="calc-btn" onclick="calc('Math.cos(')">cos</button>
-
     <button class="calc-btn" onclick="calc('Math.tan(')">tan</button>
     <button class="calc-btn" onclick="calc('Math.log(')">log</button>
     <button class="calc-btn" onclick="calc('Math.PI')">π</button>
     <button class="calc-btn" onclick="calc('Math.E')">e</button>
     <button class="calc-btn" onclick="backspace()">⌫</button>
+    <button class="calc-btn" onclick="calcServiceTotal()">💈 Total</button>
   </div>
 </div>
 
 <script>
-// MOBILE MENU
-function toggleMenu(){document.querySelector('.nav-links').classList.toggle('active');}
-
 // SECTION ANIMATION
-const sections = document.querySelectorAll("section");
-const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("active"); }); },{threshold:0.2});
-sections.forEach(section => observer.observe(section));
+const sections=document.querySelectorAll("section");
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("active");});},{threshold:0.2});
+sections.forEach(section=>observer.observe(section));
 
 // BOOKING WHATSAPP
 function sendToWhatsApp(e){
   e.preventDefault();
-  let name = document.getElementById("name").value;
-  let service = document.getElementById("service").value;
-  let date = document.getElementById("date").value;
-  let time = document.getElementById("time").value;
-  let message = `Hello, my name is ${name}. I want a ${service} on ${date} at ${time}.`;
-  let url = "https://wa.me/2207597080?text=" + encodeURIComponent(message);
-  window.open(url,"_blank");
+  let name=document.getElementById("name").value;
+  let serviceSelect=document.getElementById("service");
+  let services=[];
+  for(let option of serviceSelect.selectedOptions){services.push(option.value);}
+  let date=document.getElementById("date").value;
+  let time=document.getElementById("time").value;
+  let message=`Hello, my name is ${name}. I want the following services: ${services.join(", ")} on ${date} at ${time}.`;
+  window.open("https://wa.me/2207597080?text="+encodeURIComponent(message),"_blank");
 }
 
-// SCROLL PROGRESS & BACK TO TOP
-window.addEventListener('scroll', function(){
-  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  document.getElementById('progress-bar').style.width = (scrollTop/scrollHeight)*100 + '%';
-  document.getElementById('backToTop').style.display = (scrollTop>400)?'block':'none';
+// SCROLL & BACK TO TOP
+window.addEventListener('scroll',function(){
+  let scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+  let scrollHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width=(scrollTop/scrollHeight)*100+'%';
+  document.getElementById('backToTop').style.display=(scrollTop>400)?'block':'none';
 });
-function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
 
-// CALCULATOR LOGIC
-let display = document.getElementById('calc-display');
-let history = document.getElementById('calc-history');
+// CALCULATOR
+let display=document.getElementById('calc-display');
+let history=document.getElementById('calc-history');
+function calc(val){if(display.innerText==='0'&&!val.includes('Math'))display.innerText=val;else display.innerText+=val;}
+function backspace(){display.innerText=display.innerText.slice(0,-1);if(display.innerText==='')display.innerText='0';}
+function calculate(){try{let result=eval(display.innerText);history.innerHTML+=`${display.innerText} = ${result}<br>`;display.innerText=result;history.scrollTop=history.scrollHeight;}catch(e){display.innerText='Error';}}
+function calcServiceTotal(){const serviceSelect=document.getElementById('service');let total=0;let selected=[];for(let option of serviceSelect.selectedOptions){total+=Number(option.dataset.price);selected.push(option.value);}display.innerText=total;history.innerHTML+=`Services: ${selected.join(", ")} = $${total}<br>`;history.scrollTop=history.scrollHeight;}
 
-function calc(val){
-  if(display.innerText==='0' && !val.includes('Math')) display.innerText=val;
-  else display.innerText+=val;
-}
-function backspace(){
-  display.innerText = display.innerText.slice(0,-1);
-  if(display.innerText==='') display.innerText='0';
-}
-function calculate(){
-  try{
-    let result = eval(display.innerText);
-    history.innerHTML += `${display.innerText} = ${result}<br>`;
-    display.innerText = result;
-    history.scrollTop = history.scrollHeight;
-  }catch(e){ display.innerText='Error'; }
-}
+// RAINBOW TRAIL SPARKLES
+let lastX=0,lastY=0;document.addEventListener('mousemove',function(e){
+  let deltaX=Math.abs(e.pageX-lastX),deltaY=Math.abs(e.pageY-lastY);
+  if(deltaX+deltaY>2){
+    for(let i=0;i<3;i++){
+      const sparkle=document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left=(e.pageX+Math.random()*10-5)+'px';
+      sparkle.style.top=(e.pageY+Math.random()*10-5)+'px';
+      sparkle.style.backgroundColor=`hsl(${Math.random()*360},100%,70%)`;
+      document.body.appendChild(sparkle);
+      setTimeout(()=>{sparkle.remove();},1000);
+    }
+    lastX=e.pageX;lastY=e.pageY;
+  }
+});
 </script>
 </body>
-  </html>
+      </html>
