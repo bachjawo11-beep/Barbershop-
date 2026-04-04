@@ -1,178 +1,192 @@
-<!DOCTYPE html>pbb
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FreshCut Barber Shop</title>
-
 <style>
+/* GENERAL */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   background: #020617;
   color: white;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
-/* NAV */
+/* SCROLL PROGRESS BAR */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: gold;
+  width: 0%;
+  z-index: 1001;
+}
+
+/* NAVBAR */
 nav {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 15px;
-  background: #020617;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(2,6,23,0.95);
   position: sticky;
   top: 0;
+  z-index: 100;
 }
+nav .logo { font-weight: bold; font-size: 1.2rem; color: gold; text-shadow: 0 0 10px gold; }
+nav .nav-links { display: flex; gap: 20px; }
+nav .nav-links a { color: white; text-decoration: none; font-weight: bold; transition: 0.3s; }
+nav .nav-links a:hover { color: gold; transform: scale(1.1); }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: gold;
-}
+/* MOBILE MENU */
+.menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+.menu-toggle div { width: 25px; height: 3px; background: white; margin: 4px 0; transition: 0.3s; }
 
 /* HERO */
 .hero {
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1599058917212-69a2f0de9f3e?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 100px 20px;
-  background: linear-gradient(to right, black, #1e293b);
+  position: relative;
+  overflow: hidden;
 }
-
-.hero h1 {
-  font-size: 3rem;
-  color: gold;
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 0;
 }
-
-/* BUTTON */
-.btn {
-  display: inline-block;
-  margin-top: 20px;
+.hero h1, .hero p, .hero .btn { position: relative; z-index: 1; }
+.hero h1 { 
+  font-size: 3rem; 
+  color: gold; 
+  text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold, 0 0 30px orange; 
+  animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+.hero p { font-size: 1.3rem; margin: 15px 0; animation: fadeInText 2s ease-in-out infinite alternate; }
+.hero .btn {
+  margin: 10px;
   padding: 12px 25px;
   background: gold;
   color: black;
   border-radius: 5px;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
   transition: 0.3s;
 }
+.hero .btn:hover { background: orange; transform: scale(1.1); }
 
-.btn:hover {
-  background: orange;
-  transform: scale(1.05);
+/* NEON EFFECT */
+h2 { font-size: 2.2rem; color: gold; text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold; animation: neonGlow 1.5s ease-in-out infinite alternate; }
+
+/* SPARKLES */
+.sparkle {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: gold;
+  border-radius: 50%;
+  opacity: 0.9;
+  pointer-events: none;
+  animation-name: driftUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 10px gold, 0 0 15px orange;
+}
+@keyframes driftUp {
+  0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.8; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(-120vh) translateX(20px) scale(1); opacity: 0; }
 }
 
-/* SECTION ANIMATION */
+/* NEON KEYFRAME */
+@keyframes neonGlow {
+  0% { text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold; }
+  50% { text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 30px gold; }
+  100% { text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px gold; }
+}
+
+/* SECTIONS */
 section {
-  padding: 70px 20px;
+  padding: 60px 20px;
   text-align: center;
   opacity: 0;
-  transform: translateY(20px);
-  transition: 0.8s;
+  transform: translateY(30px);
+  transition: 0.8s ease-in-out;
+  position: relative;
+  overflow: hidden;
 }
-
-section.active {
-  opacity: 1;
-  transform: translateY(0);
-}
+section.active { opacity: 1; transform: translateY(0); }
 
 /* SERVICES */
-.services {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-  gap: 20px;
-  max-width: 900px;
-  margin: auto;
-}
-
-.card {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 10px;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
+.services { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 20px; max-width: 1000px; margin: auto; }
+.card { background: #1e293b; padding: 25px; border-radius: 15px; transition: 0.4s; }
+.card:hover { transform: scale(1.05); box-shadow: 0 0 20px gold; }
 
 /* GALLERY */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-  gap: 10px;
-  max-width: 900px;
-  margin: auto;
-}
-
-.gallery img {
-  width: 100%;
-  border-radius: 10px;
-}
+.gallery-horizontal { display: flex; overflow-x: auto; gap: 15px; padding: 15px; scroll-snap-type: x mandatory; }
+.gallery-horizontal img { width: 250px; border-radius: 10px; scroll-snap-align: start; transition: transform 0.3s; }
+.gallery-horizontal img:hover { transform: scale(1.05); cursor: pointer; }
 
 /* PRICING */
-.pricing {
-  display: grid;
-  gap: 20px;
-  max-width: 500px;
-  margin: auto;
-}
-
-.price {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 10px;
-}
+.pricing { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 20px; max-width: 900px; margin: auto; }
+.price { background: #1e293b; padding: 25px; border-radius: 15px; transition: 0.3s; position: relative; }
+.price:hover { transform: scale(1.05); box-shadow: 0 0 20px gold; }
+.price::before { content: "★ Premium"; position: absolute; top: -10px; right: 10px; background: gold; color: black; font-size: 0.8rem; padding: 3px 7px; border-radius: 5px; }
 
 /* BOOKING FORM */
-form {
-  max-width: 400px;
-  margin: auto;
-  display: grid;
-  gap: 10px;
-}
-
-input, select {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-}
+form { max-width: 450px; margin: auto; display: grid; gap: 12px; }
+input, select, button { padding: 12px; border: none; border-radius: 8px; }
+button.btn { background: gold; color: black; font-weight: bold; cursor: pointer; transition: 0.3s; }
+button.btn:hover { background: orange; transform: scale(1.05); }
 
 /* CONTACT */
-.contact {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  margin: auto;
-}
+.contact { background: #1e293b; padding: 25px; border-radius: 15px; max-width: 450px; margin: auto; }
+.contact iframe { width: 100%; height: 250px; border-radius: 10px; margin-top: 15px; }
 
-/* WHATSAPP */
-.whatsapp {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  padding: 15px;
-  border-radius: 50%;
-  text-decoration: none;
+/* FLOATING BUTTONS */
+.whatsapp { position: fixed; bottom: 20px; right: 20px; background: #25D366; padding: 18px; border-radius: 50%; font-size: 24px; text-decoration: none; box-shadow: 0 0 20px #25D366; animation: pulse 2s infinite; z-index: 1000; }
+.floating-book { position: fixed; bottom: 80px; right: 20px; background: gold; color: black; padding: 15px 25px; border-radius: 50px; font-weight: bold; text-decoration: none; box-shadow: 0 0 20px gold; z-index: 1000; transition: 0.3s; }
+.floating-book:hover { background: orange; transform: scale(1.05); }
+#backToTop { position: fixed; bottom: 150px; right: 20px; background: gold; color: black; padding: 12px 20px; border-radius: 50px; display: none; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px gold; z-index: 1000; }
+#backToTop:hover { background: orange; transform: scale(1.05); }
+@keyframes pulse {0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav .nav-links { display:none; flex-direction: column; background:#020617; position:absolute; top:60px; right:0; width:200px; padding:20px; border-radius:8px; }
+  nav .nav-links.active { display:flex; }
+  .menu-toggle { display:flex; }
+  .hero h1 { font-size:2.5rem; }
+  .hero p { font-size:1.1rem; }
+  .gallery-horizontal img { width:200px; }
 }
 </style>
 </head>
-
 <body>
 
-<!-- NAV -->
+<div id="progress-bar"></div>
+
+<!-- NAVBAR -->
 <nav>
-<a href="#home">Home</a>
-<a href="#services">Services</a>
-<a href="#gallery">Gallery</a>
-<a href="#pricing">Pricing</a>
-<a href="#booking">Book</a>
-<a href="#contact">Contact</a>
+<div class="logo">FreshCut 💈</div>
+<div class="menu-toggle" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+<div class="nav-links">
+  <a href="#home">Home</a>
+  <a href="#services">Services</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#booking">Book</a>
+  <a href="#contact">Contact</a>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -180,24 +194,23 @@ input, select {
 <h1>FreshCut Barber Shop 💈</h1>
 <p>Premium Cuts. Clean Style. Confidence.</p>
 <a href="#booking" class="btn">Book Appointment</a>
+<a href="#gallery" class="btn">View Gallery</a>
 </section>
 
 <!-- SERVICES -->
 <section id="services">
 <h2>Our Services</h2>
-
 <div class="services">
-<div class="card"><h3>Haircut</h3><p>Modern & classic styles.</p></div>
-<div class="card"><h3>Beard Trim</h3><p>Sharp grooming finish.</p></div>
-<div class="card"><h3>Full Package</h3><p>Hair + Beard combo.</p></div>
+<div class="card"><h3>💇‍♂️ Haircut</h3><p>Modern & classic styles tailored for you.</p></div>
+<div class="card"><h3>🧔 Beard Trim</h3><p>Sharp grooming finish, always fresh.</p></div>
+<div class="card"><h3>✂️ Full Package</h3><p>Hair + Beard combo for ultimate style.</p></div>
 </div>
 </section>
 
 <!-- GALLERY -->
 <section id="gallery">
 <h2>Our Work</h2>
-
-<div class="gallery">
+<div class="gallery-horizontal">
 <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70" />
 <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a" />
 <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033" />
@@ -207,7 +220,6 @@ input, select {
 <!-- PRICING -->
 <section id="pricing">
 <h2>Pricing</h2>
-
 <div class="pricing">
 <div class="price">Haircut - $5</div>
 <div class="price">Beard Trim - $3</div>
@@ -218,7 +230,6 @@ input, select {
 <!-- BOOKING -->
 <section id="booking">
 <h2>Book Appointment</h2>
-
 <form onsubmit="sendToWhatsApp(event)">
 <input type="text" id="name" placeholder="Your Name" required>
 <select id="service">
@@ -226,6 +237,7 @@ input, select {
 <option>Beard Trim</option>
 <option>Full Package</option>
 </select>
+<input type="date" id="date" required>
 <input type="time" id="time" required>
 <button class="btn">Book Now</button>
 </form>
@@ -234,43 +246,58 @@ input, select {
 <!-- CONTACT -->
 <section id="contact">
 <h2>Contact</h2>
-
 <div class="contact">
 <p>Call/WhatsApp: +2207597080</p>
-
 <iframe src="https://maps.google.com/maps?q=gambia&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
 </div>
 </section>
 
+<!-- FLOATING BUTTONS -->
 <a href="https://wa.me/2207597080" class="whatsapp">💬</a>
+<a href="#booking" class="floating-book">Book Now</a>
+<button id="backToTop" onclick="scrollToTop()">↑ Top</button>
 
 <script>
-// animation
+// MOBILE MENU
+function toggleMenu(){document.querySelector('.nav-links').classList.toggle('active');}
+
+// section animation
 const sections = document.querySelectorAll("section");
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add("active");
-    }
-  });
-});
+const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("active"); }); },{threshold:0.2});
 sections.forEach(section => observer.observe(section));
 
 // booking to WhatsApp
 function sendToWhatsApp(e){
   e.preventDefault();
-
   let name = document.getElementById("name").value;
   let service = document.getElementById("service").value;
+  let date = document.getElementById("date").value;
   let time = document.getElementById("time").value;
-
-  let message = `Hello, my name is ${name}. I want a ${service} at ${time}.`;
-
+  let message = `Hello, my name is ${name}. I want a ${service} on ${date} at ${time}.`;
   let url = "https://wa.me/2207597080?text=" + encodeURIComponent(message);
+  window.open(url,"_blank");
+}
 
-  window.open(url, "_blank");
+// SCROLL PROGRESS BAR & BACK TO TOP
+window.addEventListener('scroll', function(){
+  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (scrollTop/scrollHeight)*100 + '%';
+  document.getElementById('backToTop').style.display = (scrollTop>400)?'block':'none';
+});
+function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+// SPARKLES NEON GOLD
+for(let i=0;i<50;i++){
+  let s = document.createElement('div');
+  s.classList.add('sparkle');
+  s.style.left=Math.random()*window.innerWidth+'px';
+  s.style.top=(Math.random()*window.innerHeight)+'px';
+  s.style.width=(2+Math.random()*3)+'px';
+  s.style.height=s.style.width;
+  s.style.animationDuration=(4+Math.random()*4)+'s';
+  document.body.appendChild(s);
 }
 </script>
-
 </body>
-  </html>
+    </html>
